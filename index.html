@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AvantGarde Clothing — Next‑Level Fashion</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* ---------- Page-wide variables ---------- */
+    :root{
+      --accent1: #ff6b6b;
+      --accent2: #7c5cff;
+      --glass: rgba(255,255,255,0.06);
+      --muted: rgba(255,255,255,0.7);
+      --card-bg: rgba(255,255,255,0.03);
+      --shadow: 0 10px 30px rgba(2,6,23,0.6);
+      --radius: 18px;
+      color-scheme: dark;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.12), transparent),
+                  radial-gradient(900px 400px at 90% 90%, rgba(255,107,107,0.08), transparent),
+                  #05060a; color:#fff; -webkit-font-smoothing:antialiased;
+    }
+
+    /* ---------- Header / Navbar ---------- */
+    .navbar{backdrop-filter: blur(6px); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+    .brand{font-weight:800; letter-spacing:1px; font-size:1.2rem}
+    .badge-new{background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:#fff; padding:6px 10px; border-radius:999px; font-weight:700}
+
+    /* ---------- Hero ---------- */
+    .hero{padding:80px 0 60px; position:relative; overflow:hidden}
+    .hero .hero-left{max-width:640px}
+    .hero h1{font-size:3rem; line-height:1.02; margin-bottom:12px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .hero p{color:var(--muted); font-size:1.05rem}
+
+    /* Wave SVG */
+    .hero-wave{position:absolute; right:-120px; bottom:-40px; opacity:0.12; transform:rotate(6deg)}
+
+    /* Product grid */
+    .products{padding:40px 0}
+    .card-product{background:var(--card-bg); border:0; border-radius:16px; overflow:hidden; transition:transform .28s ease, box-shadow .28s ease; box-shadow:var(--shadow)}
+    .card-product:hover{transform:translateY(-10px) rotate(-0.6deg); box-shadow:0 25px 60px rgba(0,0,0,0.75)}
+    .card-product img{width:100%; height:320px; object-fit:cover}
+    .product-meta{padding:18px}
+    .price{font-weight:800; font-size:1.05rem}
+    .tag{font-size:.78rem; padding:6px 8px; border-radius:10px; background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); color:var(--muted)}
+
+    /* Floating Cart */
+    .cart-btn{position:fixed; right:24px; bottom:24px; z-index:1200; width:64px; height:64px; border-radius:18px; box-shadow:0 12px 40px rgba(0,0,0,0.6); background:linear-gradient(135deg,var(--accent1),var(--accent2)); display:flex; align-items:center; justify-content:center; font-size:1.25rem}
+
+    /* Sidebar / Offcanvas cart styles override */
+    .offcanvas-body{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+
+    /* Filters */
+    .filters .btn{border-radius:12px}
+
+    /* Footer */
+    footer{padding:36px 0 80px; text-align:center; color:var(--muted)}
+
+    /* Tiny animations */
+    @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    .floaty{animation:floaty 6s ease-in-out infinite}
+
+    /* Responsive tweaks */
+    @media (max-width:768px){ .hero h1{font-size:2.1rem} .card-product img{height:260px} }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark px-4">
+    <a class="navbar-brand brand d-flex align-items-center" href="#">
+      <i class="fa-solid fa-shirt fa-lg me-2"></i>AvantGarde
+      <span class="ms-3 badge-new ms-4">NEW</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navItems">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navItems">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item me-2"><a class="nav-link" href="#products">Products</a></li>
+        <li class="nav-item me-2"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item me-2"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item ms-3">
+          <button class="btn btn-outline-light btn-sm" id="themeBtn"><i class="fa-solid fa-sparkles"></i> Surprise</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="container hero">
+    <div class="row align-items-center">
+      <div class="col-lg-6 hero-left">
+        <h1>Clothes that make people stop and stare.</h1>
+        <p class="mb-4">Ultra-premium finishes, couture silhouettes, and interactive details — built to create jaw-dropping entrance moments. Browse limited drops, seasonal capsules, and one-of-a-kind statement pieces.</p>
+        <div class="d-flex gap-3 mb-4">
+          <a href="#products" class="btn btn-lg btn-primary">Shop the Drop</a>
+          <button class="btn btn-outline-light btn-lg" id="previewLook">Preview Looks</button>
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+          <small class="tag">Free shipping over $70</small>
+          <small class="text-muted ms-3">| 30-day returns</small>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center position-relative">
+        <!-- hero image collage -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <div class="card-product" style="width:220px; border-radius:20px; overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80" alt="look1">
+          </div>
+          <div class="card-product floaty" style="width:260px; border-radius:20px; overflow:hidden">
+            <img src="https://images.unsplash.com/photo-1503342452485-86f7b6f6a8c0?auto=format&fit=crop&w=800&q=80" alt="look2">
+          </div>
+        </div>
+        <svg class="hero-wave" width="420" height="220" viewBox="0 0 600 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 100 C150 200 350 0 600 100 L600 220 L0 220 Z" fill="url(#g)" />
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0" stop-color="#7c5cff" stop-opacity="0.7"/>
+              <stop offset="1" stop-color="#ff6b6b" stop-opacity="0.7"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls: Filters + Search -->
+  <section class="container filters mb-4">
+    <div class="d-flex justify-content-between align-items-center gap-3">
+      <div class="d-flex gap-2">
+        <button class="btn btn-sm btn-outline-light" data-filter="all">All</button>
+        <button class="btn btn-sm btn-outline-light" data-filter="men">Men</button>
+        <button class="btn btn-sm btn-outline-light" data-filter="women">Women</button>
+        <button class="btn btn-sm btn-outline-light" data-filter="limited">Limited</button>
+      </div>
+      <div class="input-group" style="max-width:420px">
+        <input id="searchInput" class="form-control form-control-sm" placeholder="Search looks, tags, items...">
+        <button class="btn btn-sm btn-primary" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="container products">
+    <div class="row g-4" id="productGrid">
+      <!-- product items will be injected by JS -->
+    </div>
+  </section>
+
+  <!-- Cart floating button -->
+  <button class="cart-btn" data-bs-toggle="offcanvas" data-bs-target="#cartCanvas" aria-controls="cartCanvas">
+    <i class="fa-solid fa-bag-shopping fa-lg"></i>
+  </button>
+
+  <!-- Offcanvas Cart -->
+  <div class="offcanvas offcanvas-end text-light" tabindex="-1" id="cartCanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Your Bag</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="cartItems" class="list-group mb-3"></div>
+      <div class="mt-auto">
+        <div class="d-flex justify-content-between mb-2">
+          <strong>Total</strong>
+          <strong id="cartTotal">$0.00</strong>
+        </div>
+        <button class="btn btn-primary w-100 mb-2" id="checkoutBtn">Checkout</button>
+        <button class="btn btn-outline-light w-100" id="clearCart">Clear Bag</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="container mt-5">
+    <small>© 2025 AvantGarde Clothing • Built to crave attention</small>
+  </footer>
+
+  <!-- Product Preview Modal -->
+  <div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark text-light" style="border-radius:20px; border:0">
+        <div class="modal-body p-4">
+          <div class="row">
+            <div class="col-md-6">
+              <img id="modalImg" src="" alt="" style="width:100%; border-radius:14px">
+            </div>
+            <div class="col-md-6">
+              <h3 id="modalTitle"></h3>
+              <p id="modalDesc" class="text-muted"></p>
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="price fs-4" id="modalPrice"></div>
+                <div class="tag" id="modalTag"></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Size</label>
+                <select id="sizeSelect" class="form-select form-select-sm" style="max-width:120px">
+                  <option>S</option><option>M</option><option>L</option><option>XL</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Quantity</label>
+                <input id="qtySelect" type="number" min="1" value="1" class="form-control form-control-sm" style="max-width:100px">
+              </div>
+              <div class="d-flex gap-2">
+                <button id="addToCartModal" class="btn btn-success">Add to Bag</button>
+                <button class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts: jQuery + Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ---------- Sample product data (feel free to expand) ----------
+    const PRODUCTS = [
+      {id:1, title:'Lumen Oversized Jacket', price:129, tag:'Men', desc:'Structured shoulders, satin lining. The jacket that commands a room.', img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=1200&q=80'},
+      {id:2, title:'Astra Slip Dress', price:99, tag:'Women', desc:'Silk-touch finish with asymmetric hem — modern elegance.', img:'https://images.unsplash.com/photo-1503342452485-86f7b6f6a8c0?auto=format&fit=crop&w=1200&q=80'},
+      {id:3, title:'Void Graphic Tee', price:35, tag:'Limited', desc:'Limited edition graphic print on premium cotton.', img:'https://images.unsplash.com/photo-1520975914380-7dd5b2b0f1f0?auto=format&fit=crop&w=1200&q=80'},
+      {id:4, title:'Eclipse Tailored Pants', price:89, tag:'Men', desc:'Slim tailored trousers with stretch comfort.', img:'https://images.unsplash.com/photo-1540961938680-3ec5a7f4b9f6?auto=format&fit=crop&w=1200&q=80'},
+      {id:5, title:'Halo Knit Sweater', price:79, tag:'Women', desc:'Featherweight knit that feels like a hug.', img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80'},
+      {id:6, title:'Nebula Denim', price:69, tag:'Limited', desc:'Artisan-washed denim with subtle distressing.', img:'https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=1200&q=80'}
+    ];
+
+    // ---------- Render product grid ----------
+    function renderProducts(list){
+      const $grid = $('#productGrid'); $grid.empty();
+      list.forEach(p=>{
+        const col = $(
+          `<div class="col-sm-6 col-md-4">
+            <div class="card card-product">
+              <img src="${p.img}" alt="${p.title}" class="card-img-top">
+              <div class="product-meta">
+                <div class="d-flex justify-content-between align-items-start">
+                  <h5 style="margin-bottom:6px">${p.title}</h5>
+                  <div class="price">$${p.price}</div>
+                </div>
+                <p class="text-muted small mb-2">${p.desc}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="tag">${p.tag}</div>
+                  <div>
+                    <button class="btn btn-sm btn-light me-1 previewBtn" data-id="${p.id}"><i class="fa-solid fa-eye"></i></button>
+                    <button class="btn btn-sm btn-success addBtn" data-id="${p.id}"><i class="fa-solid fa-cart-plus"></i> Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`
+        );
+        $grid.append(col);
+      });
+    }
+
+    // ---------- Cart (localStorage) ----------
+    function getCart(){ return JSON.parse(localStorage.getItem('AG_CART')||'[]'); }
+    function saveCart(c){ localStorage.setItem('AG_CART', JSON.stringify(c)); }
+    function addToCart(item){
+      const cart = getCart();
+      const existing = cart.find(i=>i.id===item.id);
+      if(existing){ existing.qty += item.qty; }
+      else cart.push(item);
+      saveCart(cart); updateCartUI();
+      showToast('Added to bag');
+    }
+    function updateCartUI(){
+      const cart = getCart();
+      const $list = $('#cartItems'); $list.empty();
+      let total = 0;
+      cart.forEach(i=>{
+        const product = PRODUCTS.find(p=>p.id===i.id);
+        const sub = product.price * i.qty; total += sub;
+        $list.append(`
+          <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-0 py-2">
+            <div>
+              <div class="fw-bold">${product.title}</div>
+              <div class="small text-muted">${i.size} • ${i.qty} × $${product.price}</div>
+            </div>
+            <div class="text-end">
+              <div class="fw-bold">$${sub.toFixed(2)}</div>
+              <button class="btn btn-sm btn-link text-danger removeItem" data-id="${i.id}">Remove</button>
+            </div>
+          </div>
+        `);
+      });
+      $('#cartTotal').text(`$${total.toFixed(2)}`);
+    }
+
+    // ---------- Toast ----------
+    function showToast(msg){
+      const $t = $(`<div class="position-fixed bottom-0 end-0 p-3" style="z-index:2000"><div class="toast align-items-center text-bg-dark border-0 show" role="alert"><div class="d-flex"><div class="toast-body">${msg}</div><button type=\"button\" class=\"btn-close btn-close-white me-2 m-auto\" data-bs-dismiss=\"toast\"></button></div></div></div>`);
+      $('body').append($t);
+      setTimeout(()=>{$t.remove()},2200);
+    }
+
+    $(function(){
+      // initial render
+      renderProducts(PRODUCTS);
+      updateCartUI();
+
+      // filter buttons
+      $('.filters').on('click','button[data-filter]', function(){
+        const f = $(this).data('filter');
+        if(f==='all') renderProducts(PRODUCTS);
+        else renderProducts(PRODUCTS.filter(p=>p.tag.toLowerCase()===f));
+      });
+
+      // search
+      $('#searchBtn').click(()=>{ const q = $('#searchInput').val().toLowerCase(); renderProducts(PRODUCTS.filter(p=> (p.title+p.desc+p.tag).toLowerCase().includes(q))); });
+
+      // preview
+      $('#productGrid').on('click','.previewBtn', function(){
+        const id = +$(this).data('id'); const p = PRODUCTS.find(x=>x.id===id);
+        $('#modalImg').attr('src',p.img); $('#modalTitle').text(p.title); $('#modalDesc').text(p.desc); $('#modalPrice').text(`$${p.price}`); $('#modalTag').text(p.tag);
+        $('#productModal').data('pid',id);
+        const m = new bootstrap.Modal(document.getElementById('productModal'));
+        m.show();
+      });
+
+      // add from card
+      $('#productGrid').on('click','.addBtn', function(){ const id=+$(this).data('id'); addToCart({id, qty:1, size:'M'}); });
+
+      // add from modal
+      $('#addToCartModal').click(function(){ const id = $('#productModal').data('pid'); const qty = Math.max(1, parseInt($('#qtySelect').val())); const size = $('#sizeSelect').val(); addToCart({id, qty, size}); $('.modal').modal('hide'); });
+
+      // remove item
+      $(document).on('click','.removeItem', function(){ const id=+$(this).data('id'); let cart=getCart(); cart = cart.filter(i=>i.id!==id); saveCart(cart); updateCartUI(); showToast('Removed'); });
+
+      // clear cart
+      $('#clearCart').click(()=>{ localStorage.removeItem('AG_CART'); updateCartUI(); showToast('Bag cleared'); });
+
+      // checkout
+      $('#checkoutBtn').click(()=>{
+        const cart = getCart(); if(cart.length===0){ showToast('Bag is empty'); return; }
+        showToast('Checkout placeholder — integrate payments');
+      });
+
+      // small fun: Surprise button toggles a quick theme pulse
+      $('#themeBtn').click(()=>{
+        document.body.animate([{filter:'hue-rotate(0deg)'},{filter:'hue-rotate(40deg)'},{filter:'hue-rotate(0deg)'}],{duration:900}); showToast('Surprise theme!');
+      });
+
+      // preview look (auto open first product modal)
+      $('#previewLook').click(()=>{ $('[data-id=1].previewBtn').trigger('click'); });
+
+      // persist UI cart on load
+      updateCartUI();
+    });
+  </script>
+</body>
+</html>
