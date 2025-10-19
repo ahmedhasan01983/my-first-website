@@ -1,0 +1,30 @@
+# robots.txt for https://www.avantgardeclothing.com
+# Created on: 2025-10-19
+
+# Allow all well-behaved bots to crawl the site
+User-agent: *
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /login/
+Disallow: /thank-you/
+Disallow: /order-confirmation/
+Disallow: /user/
+Disallow: /account/
+Disallow: /api/
+Disallow: /private/
+
+# Block search results and duplicate content
+Disallow: /search
+Disallow: /?*
+
+# Optional: Disallow file types (e.g., sensitive downloads)
+Disallow: /*.zip$
+Disallow: /*.pdf$
+Disallow: /*.csv$
+
+# Allow all product and collection pages
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.avantgardeclothing.com/sitemap.xml
